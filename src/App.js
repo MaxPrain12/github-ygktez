@@ -14,7 +14,10 @@ export function App() {
   const elementos3 = [{ done: false, texto: 'Elemento (Comp 6)' }];
 
   return (
-    <div>
+    <div style={{ with: '100%', background: 'red' }}>
+      <header style={{ background: 'lightblue', Border: '1px solid Black' }}>
+        <h1 style={{ color: 'Black' }}>Titulo Header</h1>
+      </header>
       <h1>Listas de tareas</h1>
       <ListaClase titulo="Tareas de la casa" icono="♥" elementos={elementos1} />
       <ListaClase
