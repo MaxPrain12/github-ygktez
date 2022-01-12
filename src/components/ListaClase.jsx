@@ -6,33 +6,35 @@ class ListaClase extends React.Component {
     super(props);
     this.titulo = props.titulo;
     this.icono = props.icono;
-    this.elementos = props.elementos;
-    this.listainicio = [];
-
-    if (this.elementos !== undefined) {
-      for (let i = 0; i < this.elementos.length; i++) {
-        this.listainicio.push(
-          <ComponenteListaClase
-            done={this.elementos[i].done}
-            texto={this.elementos[i].texto}
-            prioridad={this.elementos[i].prioridad}
-          />
-        );
-      }
-    }
-    this.state = { listacomps: this.listainicio };
+    this.state = {
+      listaComponentes: this.initList(props.elementos),
+    };
     this.valorTextInput = React.createRef();
     this.valorPrioritySelect = React.createRef();
   }
 
+  initList(elementos) {
+    const listaInicial = [];
+    for (let i = 0; i < elementos.length; i++) {
+      listaInicial.push(
+        <ComponenteListaClase
+          done={elementos[i].done}
+          texto={elementos[i].texto}
+          prioridad={elementos[i].prioridad}
+        />
+      );
+    }
+    return listaInicial;
+  }
+
   addElement() {
-    const newLista = this.state.listacomps.concat(
+    const newLista = this.state.listaComponentes.concat(
       <ComponenteListaClase
         texto={this.valorTextInput.current.value}
         prioridad={this.valorPrioritySelect.current.value}
       />
     );
-    this.setState({ listacomps: newLista });
+    this.setState({ listaComponentes: newLista });
   }
 
   render() {
@@ -40,12 +42,12 @@ class ListaClase extends React.Component {
       <div>
         {this.titulo} - {this.icono}
         <ul>
-          {this.state.listacomps}
-          <li style={{ listStyleType: 'none' }}>
+          {this.state.listaComponentes}
+          <li>
             <input
               ref={this.valorTextInput}
               type="text"
-              placeholder="Introduce una Tarea"
+              placeholder="Introduce una tarea"
             />
             <br />
             <select ref={this.valorPrioritySelect}>
@@ -53,11 +55,12 @@ class ListaClase extends React.Component {
               <option value="media">Prioridad Media</option>
               <option value="baja">Prioridad Baja</option>
             </select>
-            <button onClick={this.addElement.bind(this)}>añadir</button>
+            <button onClick={this.addElement.bind(this)}>Añadir</button>
           </li>
         </ul>
       </div>
     );
   }
 }
+
 export default ListaClase;
